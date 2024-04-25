@@ -10,11 +10,29 @@ export function useFetch(url, options = {}) {
     setIsError(false);
     setIsLoading(true);
 
-    fetch(url, options)
-      .then((res) => res.json())
+    const controller = new AbortController();
+
+    fetch(url, { signal: controller.signal, ...options })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
+        return Promise.reject(res);
+      })
       .then(setData)
-      .catch(() => setIsError(true))
-      .finally(() => setIsLoading(false));
+      .catch((e) => {
+        if (e.name === "AbortError") return;
+
+        setIsError(true);
+      })
+      .finally(() => {
+        if (controller.signal.aborted) return;
+        setIsLoading(false);
+      });
+
+    return () => {
+      controller.abort();
+    };
   }, [url]);
 
   return { data, isError, isLoading };

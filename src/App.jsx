@@ -15,20 +15,20 @@ const URLS = {
 };
 
 // BONUS:
-const OPTIONS = {
-  method: "POST",
-  body: JSON.stringify({ name: "Kyle" }),
-  headers: {
-    "Content-type": "application/json",
-  },
-};
+// const OPTIONS = {
+//   method: "POST",
+//   body: JSON.stringify({ name: "Kyle" }),
+//   headers: {
+//     "Content-type": "application/json",
+//   },
+// };
 
 function App() {
   const [url, setUrl] = useState(URLS.USERS);
-  //const { data, isLoading, isError } = useFetch(url);
+  const { data, isLoading, isError } = useFetch(url);
 
   // BONUS:
-  const { data, isLoading, isError } = useFetch(url, OPTIONS);
+  // const { data, isLoading, isError } = useFetch(url, OPTIONS);
 
   return (
     <>
