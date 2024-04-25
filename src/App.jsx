@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useFetch } from "./useFetch";
 
 // If the API does not work use these local URLs
 // const URLS = {
@@ -24,8 +25,8 @@ const URLS = {
 
 function App() {
   const [url, setUrl] = useState(URLS.USERS);
-
   const { data, isLoading, isError } = useFetch(url);
+
   // BONUS:
   // const { data, isLoading, isError } = useFetch(url, OPTIONS)
 
